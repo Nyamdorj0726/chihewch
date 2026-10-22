@@ -1708,23 +1708,29 @@
                 </div>
             </div>
             
-            <form method="post" name="contact" class="contact-form glass" netlify>
-                <h2>БҮРТГҮҮЛЭХ</h2>
-                <br>
-                <div class="form-group" name="contact">
-                    <input type="text" name="name" placeholder="Та овог нэрээ дундаа зайтай бичнэ үү" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Та мейл хаягаа оруулна уу" required>
-                </div>
-                <div class="form-group">
-                    <input type="phone" name="phone" placeholder="Та утасны дугаараа оруулна уу" required>
-                </div>
-                <div class="form-group">
-                    <input type="date" name="birthday" placeholder="Та өөрийн төрсөн огноог оруулна уу" required>
-                </div>
-                <button type="submit" name="send" class="submit-btn">БҮРТГҮҮЛЭХ</button>
-            </form>
+            
+			
+			<form name="contact" method="POST" data-netlify="true" class="contact-form glass">
+    <input type="hidden" name="form-name" value="contact">
+    <h2>БҮРТГҮҮЛЭХ</h2>
+    <br>
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Та овог нэрээ дундаа зайтай бичнэ үү" required>
+    </div>
+    <div class="form-group">
+        <input type="email" name="email" placeholder="Та мейл хаягаа оруулна уу" required>
+    </div>
+    <div class="form-group">
+        <input type="tel" name="phone" placeholder="Та утасны дугаараа оруулна уу" required>
+    </div>
+    <div class="form-group">
+        <input type="date" name="birthday" required>
+    </div>
+    <button type="submit" class="submit-btn">БҮРТГҮҮЛЭХ</button>
+</form>
+
+
+			
         </div>
         <div class="location">
                 <h2>Манай хаяг:</h2>
