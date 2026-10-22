@@ -1501,7 +1501,6 @@
                 <li><a href="#timeline">Компаний тухай</a></li>
                 <li><a href="#contact">Бүртгэл</a></li>
                 <li><a href="#" class="external-link">Сагс 🛒</a></li>
-</ul>
             </ul>
             <div class="mobile-menu-toggle">
                 <div class="hamburger-line"></div>
@@ -1585,7 +1584,7 @@
                         <h3> Sony WH-1000XM6 headphones </h3>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident sunt quis, dolore tenetur, laudantium id eius cupiditate numquam accusantium nostrum sed expedita hic omnis amet ipsa pariatur officiis asperiores magni?</p>
                         <strong><p>ҮНЭ: 232000₮</p></strong>
-                        <button type="submit" class="pay">Сагсанд хийх</button>
+                        <button type="button" class="pay">Сагсанд хийх</button>
                     </div>
                     <div class="feature-visual glass"></div>
                 </div>
@@ -1596,7 +1595,7 @@
                         <h3>JBL Tour One M2</h3>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia ullam ad exercitationem corporis blanditiis quia voluptates asperiores impedit? Recusandae ratione perspiciatis eaque corporis quo eum reiciendis accusamus rerum reprehenderit rem?</p>
                         <strong><p>ҮНЭ: 78000₮</p></strong>
-                        <button type="submit" class="pay">Сагсанд хийх</button>
+                        <button type="button" class="pay">Сагсанд хийх</button>
                     </div>
                     <div class="feature-visual glass"></div>
                 </div>
@@ -1607,7 +1606,7 @@
                         <h3>Shokz OpenRun Pro 2</h3>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit ipsam qui, sed ut pariatur harum mollitia, tenetur accusantium doloremque dolore fugit numquam est culpa eius nihil saepe odit aliquam?</p>
                         <strong><p>ҮНЭ: 126000₮</p></strong>
-                        <button type="submit" class="pay">Сагсанд хийх</button>
+                        <button type="button" class="pay">Сагсанд хийх</button>
                     </div>
                     <div class="feature-visual glass"></div>
                 </div>
@@ -1647,8 +1646,8 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, soluta?</p>
                     <button class="pay2">Түрээслэх</button>
                 </div>
-                
-            
+            </div>
+        </div>
     </section>
 
     <!-- Section 4: Timeline -->
@@ -1704,7 +1703,7 @@
                     <a href="https://www.facebook.com/khuvsgul.tvet" target="_blank" class="glass"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/500px-Facebook_Logo_%282019%29.png" alt="facebook" style="width: 40px; height: 40px;"></a>
                     <a href="https://mail.google.com/" target="_blank" class="glass"><img src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png" alt="Email" style="width: 40px; height: 40px;"></a>
                     <a href="https://www.youtube.com" target="_blank" class="glass"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/2560px-YouTube_full-color_icon_%282017%29.svg.png" alt="Youtube" style="width: 40px; height: 40px;"></a>
-                    <a href="https://www.instagramm.com" target="_blank" class="glass"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagramm" style="width: 40px; height: 40px;"></a>
+                    <a href="https://www.instagram.com" target="_blank" class="glass"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" style="width: 40px; height: 40px;"></a>
                 </div>
             </div>
             
@@ -1919,63 +1918,80 @@
             observer.observe(el);
         });
 
-        // Form submission effect
-        document.querySelector('.submit-btn').addEventListener('click', function(e) {
+        // Form submission -> Netlify Forms
+        const regForm = document.querySelector('form[name="contact"]');
+        regForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            this.innerHTML = 'Бүртгэж байна...';
-            this.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
-            
+            const btn = regForm.querySelector('.submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = 'Бүртгэж байна...';
+            btn.style.background = 'linear-gradient(45deg, #8000ff, #00ffff)';
+
+            try {
+                const res = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(new FormData(regForm)).toString()
+                });
+                if (!res.ok) throw new Error('failed');
+
+                btn.innerHTML = 'АМЖИЛТТАЙ БҮРТГЭЛЭЭ';
+                btn.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
+                regForm.reset();
+            } catch (err) {
+                btn.innerHTML = 'АЛДАА ГАРЛАА, ДАХИН ОРОЛДОНО УУ';
+                btn.style.background = 'linear-gradient(45deg, #ff0000, #ff0080)';
+            }
+
             setTimeout(() => {
-                this.innerHTML = 'АМЖИЛТТАЙ БҮРТГЭЛЭЭ';
-                this.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
-                
-                setTimeout(() => {
-                    this.innerHTML = 'БҮРТГҮҮЛЭХ';
-                    this.style.background = 'linear-gradient(45deg, #00ffff, #ff0080)';
-                }, 2000);
-            }, 1500);
+                btn.disabled = false;
+                btn.innerHTML = 'БҮРТГҮҮЛЭХ';
+                btn.style.background = 'linear-gradient(45deg, #00ffff, #ff0080)';
+            }, 2500);
         });
+
+        // Cart
         document.addEventListener("DOMContentLoaded", () => {
-    let totalPrice = 0;
-    const cartLink = document.querySelector(".external-link");
-    const cart = document.getElementById("cart");
-    const cartItems = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
+            let totalPrice = 0;
+            const cartLink = document.querySelector(".external-link");
+            const cart = document.getElementById("cart");
+            const cartItems = document.getElementById("cart-items");
+            const cartTotal = document.getElementById("cart-total");
 
-    // товчнууд
-    const payButtons = document.querySelectorAll(".pay");
+            // Зөвхөн бүтээгдэхүүний "Сагсанд хийх" товчнууд
+            const payButtons = document.querySelectorAll(".feature-content .pay");
 
-    payButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const feature = button.closest(".feature-content");
-            const name = feature.querySelector("h3").innerText;
-            const priceText = feature.querySelector("strong p").innerText;
-            const price = parseInt(priceText.replace(/[^0-9]/g, ""));
+            payButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const feature = button.closest(".feature-content");
+                    const name = feature.querySelector("h3").innerText;
+                    const priceText = feature.querySelector("strong p").innerText;
+                    const price = parseInt(priceText.replace(/[^0-9]/g, ""));
 
-            // Сагсанд нэмэх
-            const li = document.createElement("li");
-            li.textContent = `${name} - ${price.toLocaleString()}₮`;
-            cartItems.appendChild(li);
+                    // Сагсанд нэмэх
+                    const li = document.createElement("li");
+                    li.textContent = `${name} - ${price.toLocaleString()}₮`;
+                    cartItems.appendChild(li);
 
-            // Нийт үнийг нэмэх
-            totalPrice += price;
-            cartTotal.innerHTML = `<strong>Нийт: ${totalPrice.toLocaleString()}₮</strong>`;
+                    // Нийт үнийг нэмэх
+                    totalPrice += price;
+                    cartTotal.innerHTML = `<strong>Нийт: ${totalPrice.toLocaleString()}₮</strong>`;
 
-            // Сагсны линк шинэчлэх
-            cartLink.textContent = `Сагс 🛒 (${totalPrice.toLocaleString()}₮)`;
+                    // Сагсны линк шинэчлэх
+                    cartLink.textContent = `Сагс 🛒 (${totalPrice.toLocaleString()}₮)`;
+                });
+            });
+
+            // Сагсыг нээх/хаах
+            cartLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                cart.style.display = (cart.style.display === "none" || cart.style.display === "") ? "block" : "none";
+            });
         });
-    });
 
-    // Сагсыг нээх/хаах
-    cartLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        cart.style.display = (cart.style.display === "none" || cart.style.display === "") ? "block" : "none";
-    });
-});
-
-function closeCart() {
-    document.getElementById("cart").style.display = "none";
-}
+        function closeCart() {
+            document.getElementById("cart").style.display = "none";
+        }
 </script>
 </body>
 </html>
